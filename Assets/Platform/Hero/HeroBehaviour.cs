@@ -40,7 +40,7 @@ namespace Platform.Hero
 
         public void Jump()
         {
-            if (!canJump())
+            if (!CanJump())
             {
                 return;
             }
@@ -70,7 +70,7 @@ namespace Platform.Hero
             willJump = false;
         }
 
-        bool canJump()
+        bool CanJump()
         {
             return jumpCount < jumpCountLimit;
         }
