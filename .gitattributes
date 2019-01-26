@@ -6,7 +6,6 @@
 *.unity linguist-generated
 
 * text=auto
-*.* text eol=lf
 
 *.png binary
 *.jpg binary
