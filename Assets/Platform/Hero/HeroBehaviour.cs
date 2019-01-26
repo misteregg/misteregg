@@ -6,6 +6,7 @@ namespace Platform.Hero
     {
         public float speed;
         public float jumpSpeed;
+        public int jumpCountLimit = 1;
 
         float moveVelocity;
         float fallSpeed;
@@ -13,7 +14,7 @@ namespace Platform.Hero
         int direction;
         bool willJump;
 
-        bool isGrounded = true;
+        int jumpCount = 0;
 
         Rigidbody2D body;
         UserInput input;
@@ -45,12 +46,12 @@ namespace Platform.Hero
             }
 
             willJump = true;
-            isGrounded = false;
+            jumpCount++;
         }
 
         void OnCollisionEnter2D(Collision2D collision)
         {
-            isGrounded = true;
+            jumpCount = 0;
         }
 
         void UpdatePhysics()
@@ -71,7 +72,7 @@ namespace Platform.Hero
 
         bool canJump()
         {
-            return isGrounded;
+            return jumpCount < jumpCountLimit;
         }
     }
 }
