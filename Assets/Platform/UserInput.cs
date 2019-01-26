@@ -17,7 +17,8 @@ namespace Platform
         {
             if (Math.Abs(Input.GetAxisRaw("Horizontal")) > 0)
             {
-                hero.Walk(Input.GetAxisRaw("Horizontal") / Math.Abs(Input.GetAxisRaw("Horizontal")));
+                int walkDirection = (int) Math.Floor(Input.GetAxisRaw("Horizontal") / Math.Abs(Input.GetAxisRaw("Horizontal")));
+                hero.Walk(walkDirection);
             }
 
             if (Input.GetButtonDown("Jump"))

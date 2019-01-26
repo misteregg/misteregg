@@ -4,45 +4,74 @@ namespace Platform.Hero
 {
     public class HeroBehaviour : MonoBehaviour
     {
-        public float speed = 5;
-        public float terminalVelocity = -10;
-        private Rigidbody2D rb2d;
-        private UserInput input;
+        public float speed;
+        public float jumpSpeed;
 
-        private float horizontalPush = 0;
-        private float verticalPush = 0;
+        float moveVelocity;
+        float fallSpeed;
+
+        int direction;
+        bool willJump;
+
+        bool isGrounded = true;
+
+        Rigidbody2D body;
+        UserInput input;
 
         void Start()
         {
-            rb2d = GetComponent<Rigidbody2D>();
+            body = GetComponent<Rigidbody2D>();
             input = new UserInput(this);
         }
 
-        void FixedUpdate()
+        void Update()
         {
             input.Update();
+            UpdatePhysics();
 
-            float moveVertical = verticalPush > 0
-                ? verticalPush
-                : Mathf.Max(rb2d.velocity.y, terminalVelocity);
-            float moveHorizontal = horizontalPush;
-
-            Vector2 movement = new Vector2(moveHorizontal, moveVertical);
-            rb2d.velocity = movement;
-
-            verticalPush = 0;
-            horizontalPush = 0;
-            moveHorizontal = 0;
+            ResetVariables();
         }
 
-        public void Walk(float moveHorizontal)
+        public void Walk(int direction)
         {
-            horizontalPush = moveHorizontal * speed;
+            this.direction = direction;
         }
 
         public void Jump()
         {
-            verticalPush = 10;
+            if (!canJump())
+            {
+                return;
+            }
+
+            willJump = true;
+            isGrounded = false;
+        }
+
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            isGrounded = true;
+        }
+
+        void UpdatePhysics()
+        {
+            moveVelocity = 0;
+            fallSpeed = willJump ? jumpSpeed : body.velocity.y;
+
+            moveVelocity = speed * direction;
+
+            body.velocity = new Vector2(moveVelocity, fallSpeed);
+        }
+
+        void ResetVariables()
+        {
+            direction = 0;
+            willJump = false;
+        }
+
+        bool canJump()
+        {
+            return isGrounded;
         }
     }
 }
