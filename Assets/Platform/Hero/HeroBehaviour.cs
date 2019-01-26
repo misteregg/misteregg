@@ -5,6 +5,7 @@ namespace Platform.Hero
     public class HeroBehaviour : MonoBehaviour
     {
         public float speed = 5;
+        public float terminalVelocity = -10;
         private Rigidbody2D rb2d;
         private UserInput input;
 
@@ -23,7 +24,7 @@ namespace Platform.Hero
 
             float moveVertical = verticalPush > 0
                 ? verticalPush
-                : rb2d.velocity.y;
+                : Mathf.Min(rb2d.velocity.y, terminalVelocity);
             float moveHorizontal = horizontalPush;
 
             Vector2 movement = new Vector2(moveHorizontal, moveVertical);
