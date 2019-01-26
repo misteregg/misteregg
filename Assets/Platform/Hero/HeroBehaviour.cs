@@ -20,11 +20,13 @@ namespace Platform.Hero
         Rigidbody2D body;
         UserInput input;
         Animator animator;
+        SpriteRenderer spriteRenderer;
 
         void Start()
         {
             body = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
             input = new UserInput(this);
         }
 
@@ -81,9 +83,7 @@ namespace Platform.Hero
                 lastDirection = direction;
             }
 
-            Vector3 scale = animator.transform.localScale;
-            scale.x = lastDirection;
-            animator.transform.localScale = scale;
+            spriteRenderer.flipX = lastDirection < 0;
         }
 
         void ResetVariables()
