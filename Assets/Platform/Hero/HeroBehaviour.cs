@@ -24,7 +24,7 @@ namespace Platform.Hero
 
             float moveVertical = verticalPush > 0
                 ? verticalPush
-                : Mathf.Min(rb2d.velocity.y, terminalVelocity);
+                : Mathf.Max(rb2d.velocity.y, terminalVelocity);
             float moveHorizontal = horizontalPush;
 
             Vector2 movement = new Vector2(moveHorizontal, moveVertical);
