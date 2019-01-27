@@ -6,19 +6,21 @@ namespace Object
     {
         public GameObject interactButton;
 
+        private InteractButtonHintBehavior interactButtonHintBehavior;
+
         private void Start()
         {
-            interactButton.SetActive(false);
+            interactButtonHintBehavior = interactButton.GetComponent<InteractButtonHintBehavior>();
         }
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            interactButton.SetActive(true);
+            interactButtonHintBehavior.ShowHintAnimation();
         }
 
         void OnTriggerExit2D(Collider2D collision)
         {
-            interactButton.SetActive(false);
+            interactButtonHintBehavior.HideHintAnimation();
         }
     }
 }
