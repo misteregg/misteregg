@@ -5,12 +5,11 @@ namespace Object
     public class ObjectBehaviour : MonoBehaviour
     {
         public GameObject interactButton;
-
-        private int fois = 0;
+        private InteractButtonHintBehavior interactButtonHintBehavior;
 
         private void Start()
         {
-            interactButton.SetActive(false);
+            interactButtonHintBehavior = interactButton.GetComponent<InteractButtonHintBehavior>();
         }
 
         void Update()
@@ -23,17 +22,17 @@ namespace Object
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            interactButton.SetActive(true);
+            interactButtonHintBehavior.ShowHintAnimation();
         }
 
         void OnTriggerExit2D(Collider2D collision)
         {
-            interactButton.SetActive(false);
+            interactButtonHintBehavior.HideHintAnimation();
         }
 
         void Interact()
         {
-            Debug.Log("FOI " + (fois++));
+            Debug.Log("FOI ");
         }
     }
 }
